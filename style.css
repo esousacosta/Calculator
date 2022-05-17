@@ -35,7 +35,8 @@ h1 {
     height: 30px;
     flex: 1 0 auto;
     border-radius: 5px;
-    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;;
+    font-weight: 500;
 }
 
 .digitButton {
