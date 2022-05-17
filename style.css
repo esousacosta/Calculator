@@ -1,19 +1,47 @@
 body {
     text-align: center;
+    background-color: rgb(190, 208, 190);
+}
+
+h1 {
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    font-weight: 500;
+    color: rgb(159, 117, 24);
 }
 
 .calculatorDisplay {
     max-width: 100%;
     height: 50px;
-    border: 1px solid black;
-    flex: 1 0 100%;
+    border: 3px solid grey;
+    background: lightblue;
+    flex: 1 1 100%;
 }
 
 .calculatorFrame {
+    box-sizing: content-box;
+    border: 5px solid black;
+    background: black;
     max-width: 200px;
     max-height: 500px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
+    align-content: stretch;
     flex-wrap: wrap;
+}
+
+.functionButton, .digitButton {
+    width: 50px;
+    height: 30px;
+    flex: 1 0 auto;
+    border-radius: 5px;
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+}
+
+.digitButton {
+    background-color: rgb(100, 170, 232);
+}
+
+.functionButton {
+    background-color: rgb(242, 157, 82);
 }
