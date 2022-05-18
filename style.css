@@ -15,6 +15,14 @@ h1 {
     border: 3px solid grey;
     background: lightblue;
     flex: 1 1 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.calculatorDisplay > p {
+    padding-top: 0px;
+    font-size: 28px;
 }
 
 .calculatorFrame {
