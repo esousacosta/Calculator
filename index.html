@@ -9,26 +9,26 @@
         <h1>Calculator</h1>
         <div id="calculatorFrameId" class="calculatorFrame">
             <div id="calculatorDisplayId" class="calculatorDisplay"><p>12345678</p></div>
-            <button id="clearButtonId" class="functionButton">AC</button>
-            <button id="invertSignButtonId" class="functionButton">+/-</button>
-            <button id="percentageButtonId" class="functionButton">%</button>
-            <button id="divisionButtonId" class="functionButton">÷</button>
+            <button data-function="clearDisplay" id="clearButtonId" class="operationButton">AC</button>
+            <button data-function="invertSign" id="invertSignButtonId" class="operationButton">+/-</button>
+            <button data-function="calculatePercentage" id="percentageButtonId" class="operationButton">%</button>
+            <button data-function="divide" id="divisionButtonId" class="operationButton">÷</button>
             <button id="numberSevenButtonId" class="digitButton">7</button>
             <button id="numberEightButtonId" class="digitButton">8</button>
             <button id="numberNineButtonId" class="digitButton">9</button>
-            <button id="multiplicationButtonId" class="functionButton">x</button>
+            <button data-function="multiply" id="multiplicationButtonId" class="operationButton">x</button>
             <button id="numberFourButtonId" class="digitButton">4</button>
             <button id="numberFiveButtonId" class="digitButton">5</button>
             <button id="numberSixButtonId" class="digitButton">6</button>
-            <button id="additionButtonId" class="functionButton">+</button>
+            <button data-function="add" id="additionButtonId" class="operationButton">+</button>
             <button id="numberOneButtonId" class="digitButton">1</button>
             <button id="numberTwoButtonId" class="digitButton">2</button>
             <button id="numberThreeButtonId" class="digitButton">3</button>
-            <button id="subtractionButtonId" class="functionButton">-</button>
+            <button data-function="subtract" id="subtractionButtonId" class="operationButton">-</button>
             <button id="numberZeroButtonId" class="digitButton">0</button>
             <button id="pointButtonId" class="functionButton">.</button>
             <button id="eraseButtonId" class="functionButton">CE</button>
-            <button id="resultButtonId" class="functionButton">=</button>
+            <button data-function="calculateResult" id="resultButtonId" class="operationButton">=</button>
         </div>
         <script src="script.js"></script>
     </body>

@@ -40,7 +40,7 @@ h1 {
     flex-wrap: wrap;
 }
 
-.functionButton, .digitButton {
+.functionButton, .digitButton, .operationButton {
     width: 50px;
     height: 30px;
     flex: 1 0 auto;
@@ -54,6 +54,6 @@ h1 {
     background-color: rgb(100, 170, 232);
 }
 
-.functionButton {
+.functionButton, .operationButton {
     background-color: rgb(242, 157, 82);
 }
