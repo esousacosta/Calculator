@@ -4,6 +4,7 @@ class Calculator {
     #displayElement;
     displayValue;
     operationButtonsList;
+    digitButtonsList;
     
     operationButtonFunctionsMap = {
         'add': this.add,
@@ -16,7 +17,7 @@ class Calculator {
 
     constructor(ioDisplayElement)
     {
-        this.displayValue = 0;
+        this.displayValue = "0";
         this.#displayElement = ioDisplayElement;
     }
     
@@ -47,30 +48,50 @@ class Calculator {
         return numerator * denominator;
     }
 
-    getRemainder(firstOperand, secondOperand)
+    getRemainder(iFirstOperand, iSecondOperand)
     {
-        return firstOperand % secondOperand;
+        return iFirstOperand % iSecondOperand;
+    }
+    
+    getDisplayContent()
+    {
+        return this.#displayElement.textContent;
     }
 
     clearDisplay()
     {
-        this.setDisplayValue(0);
+        this.setDisplayValue("");
+    }
+    
+    addDigitOnDisplay(iDigitButtonClickEvent)
+    {
+        if (this.getDisplayContent() === '0')
+        {
+            this.clearDisplay();
+        }
+        this.setDisplayValue(this.displayValue + iDigitButtonClickEvent.target.textContent);
     }
     
     configureOperationButtonFunctions()
     {
-        console.log(this);
         if (this.operationButtonsList !== undefined)
         {
             this.operationButtonsList.forEach(aOperationButton =>
                 {
-                console.log("This is the selected button: " + aOperationButton.dataset.function);
                 if (aOperationButton.dataset.function && (aOperationButton.dataset.function in this.operationButtonFunctionsMap))
                 {
                     aOperationButton.addEventListener('click',this.operationButtonFunctionsMap[aOperationButton.dataset.function].bind(this), false);
                 }
             });
         }
+    }
+    
+    setUpDigitButtons()
+    {
+        this.digitButtonsList.forEach((aDigitButton) =>
+        {
+            aDigitButton.addEventListener('click', this.addDigitOnDisplay.bind(this));
+        })
     }
     
 }
@@ -81,8 +102,13 @@ const aCalculatorDisplayParagraph = aCalculatorDisplay.firstChild;
 
 const aCalculator = new Calculator(aCalculatorDisplayParagraph);
 
+// Set up of operation buttons
 aCalculator.operationButtonsList = document.querySelectorAll(".operationButton");
 aCalculator.configureOperationButtonFunctions();
+
+// Set up of digit buttons
+aCalculator.digitButtonsList = document.querySelectorAll(".digitButton");
+aCalculator.setUpDigitButtons();
 
 const aAdditionButton = document.getElementById("additionButtonId");
 //aAdditionButton.addEventListener('click', () => aCalculator.setDisplayValue(aCalculator.add(1, 2)));
