@@ -12,12 +12,14 @@ class Calculator {
     
     operationButtonFunctionsMap = {
         'add': this.toggleAdd,
-        'subtract': this.subtract,
-        'multiply': this.multiply,
-        'divide': this.divide,
-        'getRemainder': this.getRemainder,
+        'subtract': this.toggleSubtract,
+        'multiply': this.toggleMultiply,
+        'divide': this.toggleDivide,
+        'calculatePercentage': this.toggleGetPercentage,
         'clearDisplay': this.clearDisplay,
-        'calculateResult': this.calculateResult
+        'calculateResult': this.calculateResult,
+        'eraseDigit': this.eraseDigit,
+        'invertSign': this.invertSign
     };
 
     constructor(ioDisplayElement)
@@ -28,15 +30,24 @@ class Calculator {
     
     setDisplayValue(newDisplayValue)
     {
-        this.displayValue = newDisplayValue;
+        this.displayValue = String(newDisplayValue);
         this.#displayElement.textContent = this.displayValue;
+        if (this.#displayElement.textContent.length >= 12)
+        {
+            this.setDisplayValue(this.#displayElement.textContent.slice(0, 10));
+        }
     }
     
-    toggleAdd(iOperationButtonClickEvent)
+    perpareCalculatorForNextOperation()
     {
         this.firstOperand = this.displayValue;
         this.clearDisplayOnNextDigit = true;
         this.operationOngoing = true;
+    }
+    
+    toggleAdd(iOperationButtonClickEvent)
+    {
+        this.perpareCalculatorForNextOperation();
         this.currentOperation = this.add;
     }
 
@@ -45,29 +56,79 @@ class Calculator {
         return Number(iFirstOperand) + Number(iSecondOperand);
     }
 
-    subtract(firstOperand, secondOperand)
+    toggleSubtract(iOperationButtonClickEvent)
     {
-        return firstOperand - secondOperand;
+        this.perpareCalculatorForNextOperation();
+        this.currentOperation = this.subtract;
     }
 
-    multiply(firstOperand, secondOperand)
+    subtract(iFirstOperand, iSecondOperand)
     {
-        return firstOperand * secondOperand;
+        return Number(iFirstOperand) - (iSecondOperand);
     }
 
-    divide(numerator, denominator)
+    toggleMultiply(iOperationButtonClickEvent)
+    {
+        this.perpareCalculatorForNextOperation();
+        this.currentOperation = this.multiply;
+    }
+    
+    multiply(iFirstOperand, iSecondOperand)
+    {
+        return Number(iFirstOperand) * Number(iSecondOperand);
+    }
+    
+    toggleDivide(iOperationButtonClickEvent)
+    {
+        this.perpareCalculatorForNextOperation();
+        this.currentOperation = this.divide;
+    }
+
+    divide(iNumerator, iDenominator)
     {
         // TODO: check if the denominator is not zero
-        return numerator * denominator;
+        if (iDenominator != 0)
+        {
+            return Number(iNumerator) / Number(iDenominator);
+        }
+        this.clearDisplayOnNextDigit = true;
+        return "ERROR"
+    }
+    
+    toggleGetPercentage(iOperationButtonClickEvent)
+    {
+        this.perpareCalculatorForNextOperation();
+        this.currentOperation = this.getPercentage;
     }
 
-    getRemainder(iFirstOperand, iSecondOperand)
+    getPercentage(iFirstOperand, iSecondOperand)
     {
-        return iFirstOperand % iSecondOperand;
+        return (Number(iFirstOperand) / 100) * Number(iSecondOperand);
+    }
+    
+    eraseDigit(iButtonClickEvent)
+    {
+        if (this.displayValue.length !== 0)
+        {
+            this.setDisplayValue(this.displayValue.slice(0, this.displayValue.length - 1));
+        }
+    }
+    
+    invertSign(iButtonClickEvent)
+    {
+        if (this.displayValue.charAt(0) === '-')
+        {
+            this.setDisplayValue(this.displayValue.slice(1, this.displayValue.length));
+        }
+        else if (this.displayValue.length > 0)
+        {
+            this.setDisplayValue("-" + this.displayValue);
+        }
     }
     
     calculateResult(iEqualsButtonClickEvent)
     {
+        this.clearDisplayOnNextDigit = true;
         this.setDisplayValue(this.currentOperation(this.firstOperand, this.displayValue));
     }
     

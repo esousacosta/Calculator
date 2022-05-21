@@ -54,6 +54,6 @@ h1 {
     background-color: rgb(100, 170, 232);
 }
 
-.functionButton, .operationButton {
+.functionButton, .operationButton, #pointButtonId {
     background-color: rgb(242, 157, 82);
 }
