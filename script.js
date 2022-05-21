@@ -1,18 +1,23 @@
 "use strict";
 
 class Calculator {
+    firstOperand;
+    currentOperation;
+    operationOngoing = false;
+    clearDisplayOnNextDigit = false;
     #displayElement;
     displayValue;
     operationButtonsList;
     digitButtonsList;
     
     operationButtonFunctionsMap = {
-        'add': this.add,
+        'add': this.toggleAdd,
         'subtract': this.subtract,
         'multiply': this.multiply,
         'divide': this.divide,
         'getRemainder': this.getRemainder,
-        'clearDisplay': this.clearDisplay
+        'clearDisplay': this.clearDisplay,
+        'calculateResult': this.calculateResult
     };
 
     constructor(ioDisplayElement)
@@ -26,10 +31,18 @@ class Calculator {
         this.displayValue = newDisplayValue;
         this.#displayElement.textContent = this.displayValue;
     }
-
-    add(firstOperand, secondOperand)
+    
+    toggleAdd(iOperationButtonClickEvent)
     {
-        return firstOperand + secondOperand;
+        this.firstOperand = this.displayValue;
+        this.clearDisplayOnNextDigit = true;
+        this.operationOngoing = true;
+        this.currentOperation = this.add;
+    }
+
+    add(iFirstOperand, iSecondOperand)
+    {
+        return Number(iFirstOperand) + Number(iSecondOperand);
     }
 
     subtract(firstOperand, secondOperand)
@@ -53,6 +66,11 @@ class Calculator {
         return iFirstOperand % iSecondOperand;
     }
     
+    calculateResult(iEqualsButtonClickEvent)
+    {
+        this.setDisplayValue(this.currentOperation(this.firstOperand, this.displayValue));
+    }
+    
     getDisplayContent()
     {
         return this.#displayElement.textContent;
@@ -65,9 +83,10 @@ class Calculator {
     
     addDigitOnDisplay(iDigitButtonClickEvent)
     {
-        if (this.getDisplayContent() === '0')
+        if (this.getDisplayContent() === '0' || this.clearDisplayOnNextDigit)
         {
             this.clearDisplay();
+            this.clearDisplayOnNextDigit = false;
         }
         this.setDisplayValue(this.displayValue + iDigitButtonClickEvent.target.textContent);
     }
@@ -80,7 +99,7 @@ class Calculator {
                 {
                 if (aOperationButton.dataset.function && (aOperationButton.dataset.function in this.operationButtonFunctionsMap))
                 {
-                    aOperationButton.addEventListener('click',this.operationButtonFunctionsMap[aOperationButton.dataset.function].bind(this), false);
+                    aOperationButton.addEventListener('click', this.operationButtonFunctionsMap[aOperationButton.dataset.function].bind(this), false);
                 }
             });
         }
