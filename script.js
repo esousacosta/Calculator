@@ -1,18 +1,17 @@
 "use strict";
 
-
 class Calculator {
     #displayElement;
     displayValue;
     operationButtonsList;
     
-    static sOperationButtonFunctionsMap = {
-        'add': Calculator.add,
-        'subtract': Calculator.subtract,
-        'multiply': Calculator.multiply,
-        'divide': Calculator.divide,
-        'getRemainder': Calculator.getRemainder,
-        'clearDisplay': Calculator.clearDisplay
+    operationButtonFunctionsMap = {
+        'add': this.add,
+        'subtract': this.subtract,
+        'multiply': this.multiply,
+        'divide': this.divide,
+        'getRemainder': this.getRemainder,
+        'clearDisplay': this.clearDisplay
     };
 
     constructor(ioDisplayElement)
@@ -20,55 +19,55 @@ class Calculator {
         this.displayValue = 0;
         this.#displayElement = ioDisplayElement;
     }
-
+    
     setDisplayValue(newDisplayValue)
     {
         this.displayValue = newDisplayValue;
         this.#displayElement.textContent = this.displayValue;
     }
 
-    static add(firstOperand, secondOperand)
+    add(firstOperand, secondOperand)
     {
         return firstOperand + secondOperand;
     }
 
-    static subtract(firstOperand, secondOperand)
+    subtract(firstOperand, secondOperand)
     {
         return firstOperand - secondOperand;
     }
 
-    static multiply(firstOperand, secondOperand)
+    multiply(firstOperand, secondOperand)
     {
         return firstOperand * secondOperand;
     }
 
-    static divide(numerator, denominator)
+    divide(numerator, denominator)
     {
         // TODO: check if the denominator is not zero
         return numerator * denominator;
     }
 
-    static getRemainder(firstOperand, secondOperand)
+    getRemainder(firstOperand, secondOperand)
     {
         return firstOperand % secondOperand;
     }
 
-    static clearDisplay()
+    clearDisplay()
     {
         this.setDisplayValue(0);
     }
     
     configureOperationButtonFunctions()
     {
+        console.log(this);
         if (this.operationButtonsList !== undefined)
         {
-            this.operationButtonsList.forEach(aOperationButton => {
-                console.log("This is the selected button: " + aOperationButton.dataset.function);
-                if (aOperationButton.dataset.function && (aOperationButton.dataset.function in Calculator.sOperationButtonFunctionsMap))
+            this.operationButtonsList.forEach(aOperationButton =>
                 {
-                    const x = Calculator.sOperationButtonFunctionsMap[aOperationButton.dataset.function];
-                    console.log(x);
-                    aOperationButton.addEventListener('click', Calculator.sOperationButtonFunctionsMap[aOperationButton.dataset.function]);
+                console.log("This is the selected button: " + aOperationButton.dataset.function);
+                if (aOperationButton.dataset.function && (aOperationButton.dataset.function in this.operationButtonFunctionsMap))
+                {
+                    aOperationButton.addEventListener('click',this.operationButtonFunctionsMap[aOperationButton.dataset.function].bind(this), false);
                 }
             });
         }
